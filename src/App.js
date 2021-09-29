@@ -60,11 +60,12 @@ function App() {
 
       <div className="main card" >
 
-        <form onSubmit={handleSubmit} className="input-group">
-          <input type="text" className="input form-control" placeholder="Add text" value={text}
+        <form onSubmit={handleSubmit} className="input-group input">
+          <input type="text" className="form-control" placeholder="Add Task" value={text}
             onChange={e => setText(e.target.value)}></input>
           <div className="input-group-append">
-            <button id="add" className="btn btn-outline-secondary button" type="button" onClick={handleSubmit}>Add</button>
+            <button id="add" className="btn btn-outline-success" type="button"
+            onClick={handleSubmit}>Add</button>
           </div>
         </form>
 
@@ -73,8 +74,12 @@ function App() {
             return (
               <li key={i} className={task.done ? "list-group-item strike" : "list-group-item"}>
                 {task.text}
-                <button id="done" className="btn button" onClick={() => doneTodo(i)}>{task.done ? "Not Done" : "Done"}</button>
-                <button id="delete" className="btn button" onClick={() => deleteTodo(i)}>Delete</button>
+                <button id="delete" className="btn button" onClick={() => deleteTodo(i)}>
+                  Delete
+                </button>
+                <button id="done" className="btn button" onClick={() => doneTodo(i)}>
+                  {task.done ? "Not Done" : "Done"}
+                </button>                
               </li>
             )
           })}
