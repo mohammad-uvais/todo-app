@@ -18,25 +18,25 @@ function App() {
       done: false
     }
   ];
-  
-  const [todos, setTodos] = useState(data);
+
+  // const [todos, setTodos] = useState(data);
   const [text, setText] = useState("");
+
+  const [todos, setTodos] = useState(() => {
+    const getTodos = localStorage.getItem("tasks");
+    const tasks = JSON.parse(getTodos);
+    return tasks || data;
+  });
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(todos));
   }, [todos]);
 
-  useState(() => {
+  useEffect(() => {
     const getTodos = localStorage.getItem("tasks");
     const tasks = JSON.parse(getTodos);
     setTodos(tasks);
   }, []);
-
-  // const [todos, setTodos] = useState(() => {
-  //   const getTodos = localStorage.getItem("tasks");
-  //   const tasks = JSON.parse(getTodos);
-  //   return tasks || data;
-  // });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,6 +68,11 @@ function App() {
     setTodos(removeTodo)
   }
 
+  const resetApp = () => {
+    localStorage.clear();
+    setTodos(data);
+  }
+
   return (
     <div className="App">
 
@@ -89,10 +94,11 @@ function App() {
             return (
               <li key={i} className={task.done ? "list-group-item strike" : "list-group-item"}>
                 {task.text}
-                <button id="delete" className="btn button" onClick={() => deleteTodo(i)}>
+                <button id="delete" className="btn btn-outline-danger button"
+                onClick={() => deleteTodo(i)}>
                   Delete
                 </button>
-                <button id="done" className="btn button" onClick={() => doneTodo(i)}>
+                <button id="done" className="btn btn-outline-success button" onClick={() => doneTodo(i)}>
                   {task.done ? "Not Done" : "Done"}
                 </button>                
               </li>
@@ -100,7 +106,11 @@ function App() {
           })}
         </ul>
 
+        
+
       </div>
+
+      <button id="reset" className="btn btn-outline-warning reset" type="button" onClick={resetApp}>Reset</button>
 
     </div>
   );
