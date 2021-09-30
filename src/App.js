@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/header';
 
@@ -18,10 +18,25 @@ function App() {
       done: false
     }
   ];
-
+  
   const [todos, setTodos] = useState(data);
-
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(todos));
+  }, [todos]);
+
+  useState(() => {
+    const getTodos = localStorage.getItem("tasks");
+    const tasks = JSON.parse(getTodos);
+    setTodos(tasks);
+  }, []);
+
+  // const [todos, setTodos] = useState(() => {
+  //   const getTodos = localStorage.getItem("tasks");
+  //   const tasks = JSON.parse(getTodos);
+  //   return tasks || data;
+  // });
 
   const handleSubmit = (e) => {
     e.preventDefault();
