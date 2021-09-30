@@ -19,20 +19,20 @@ function App() {
     }
   ];
 
-  // const [todos, setTodos] = useState(data);
+  const [todos, setTodos] = useState(data);
   const [text, setText] = useState("");
 
-  const [todos, setTodos] = useState(() => {
-    const getTodos = localStorage.getItem("tasks");
-    const tasks = JSON.parse(getTodos);
-    return tasks || data;
-  });
+  // const [todos, setTodos] = useState(() => {
+  //   const getTodos = localStorage.getItem("tasks");
+  //   const tasks = JSON.parse(getTodos);
+  //   return tasks || data;
+  // });
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(todos));
   }, [todos]);
 
-  useEffect(() => {
+  useState(() => {
     const getTodos = localStorage.getItem("tasks");
     const tasks = JSON.parse(getTodos);
     setTodos(tasks);
