@@ -6,4 +6,4 @@ export default function Header() {
             <h1>Tasks ToDo</h1>
         </header>
     )
-};
+}
