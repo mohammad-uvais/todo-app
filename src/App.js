@@ -21,11 +21,13 @@ export default function App() {
     }
   ];
 
-  const [toDos, setToDos] = useState(() => {
+  const intitialState = () => {
     let getToDos = localStorage.getItem("tasks");
     let tasks = JSON.parse(getToDos);
     return tasks || initial_data;
-  });
+  }
+  
+  const [toDos, setToDos] = useState(intitialState());
 
   const [text, setText] = useState("");
 
@@ -72,12 +74,12 @@ export default function App() {
     <div className="App">
       <Header />
       <div className="main card" >
-        <form onSubmit={() => handleSubmit()} className="input-group input">
+        <form onSubmit={(e) => handleSubmit(e)} className="input-group input">
           <input type="text" className="form-control" placeholder="Add Task" value={text}
             onChange={(e) => setText(e.target.value)}></input>
           <div className="input-group-append">
             <button id="add" className="btn btn-outline-success" type="button"
-              onClick={() => handleSubmit()}>Add</button>
+              onClick={(e) => handleSubmit(e)}>Add</button>
           </div>
         </form>
         <ul className="list-group list-group-flush">
